@@ -1,0 +1,92 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                           UPD1 Volume BOX.mq5    |
+//|                        Copyright 2022, Forex Robot Easy Team     |
+//|                                          https://forexroboteasy.com|
+//+------------------------------------------------------------------+
+
+// Data Source Flexibility
+enum DataSource
+{
+    TICKS,
+    PRICE
+};
+
+input DataSource dataSource = DataSource.TICKS; // Default data source is ticks
+
+// Adaptive Grid Spacing
+double GetGridSpacing()
+{
+    int timeframe = Period();
+    
+    double gridSpacing = 0.0;
+    
+    if (timeframe == PERIOD_M1)
+        gridSpacing = 0.001;
+    else if (timeframe == PERIOD_M5)
+        gridSpacing = 0.005;
+    else if (timeframe == PERIOD_M15)
+        gridSpacing = 0.01;
+    else if (timeframe == PERIOD_H1)
+        gridSpacing = 0.02;
+    else if (timeframe == PERIOD_H4)
+        gridSpacing = 0.05;
+    else if (timeframe == PERIOD_D1)
+        gridSpacing = 0.1;
+    
+    return gridSpacing;
+}
+
+// Adaptive High Volume Search Step
+int GetSearchStep(double boxSize)
+{
+    double searchStep = boxSize / 2.0;
+    return (int)searchStep;
+}
+
+// Automatic Chameleon Color
+color GetIndicatorColor()
+{
+    color indicatorColor = clrRed;
+    
+    // Determine the criteria for color change
+    if (SomeCondition)
+        indicatorColor = clrGreen;
+    else if (SomeOtherCondition)
+        indicatorColor = clrBlue;
+    
+    return indicatorColor;
+}
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set the appropriate data source
+    if (dataSource == DataSource.TICKS)
+        // Use ticks as the data source
+        // ...
+
+    else if (dataSource == DataSource.PRICE)
+        // Use price data as the data source
+        // ...
+
+    // Calculate and adjust the grid spacing
+    double gridSpacing = GetGridSpacing();
+    // ...
+
+    // Adjust the search step for high volume areas
+    double boxSize = 0.0; // Calculate the box size
+    int searchStep = GetSearchStep(boxSize);
+    // ...
+
+    // Change the color of the indicator
+    color indicatorColor = GetIndicatorColor();
+    // ...
+
+    // Continue with the rest of the initialization
+    // ...
+
+    return INIT_SUCCEEDED;
+}
